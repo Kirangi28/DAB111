@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Database</title>
+
+    <style>
+        /* Your existing styles... */
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .search-bar {
+            margin: 20px;
+        }
+
+        .product-listing {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            overflow: hidden;
+            width: 300px;
+        }
+
+        .product-card-content {
+            padding: 15px;
+        }
+
+        h3 {
+            color: #007bff;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Books Database</h1>
+
+    <!-- Search bar -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search by name or price">
+        <button onclick="searchBooks()">Search</button>
+    </div>
+
+    <!-- Product listing -->
+    <div class="product-listing">
+        {% for book in book_data %}
+        <div class="product-card">
+            <!-- Use a dummy image URL like "https://via.placeholder.com/300/89c5cc/fff?text=Book" for each product -->
+            <div class="product-card-content">
+                <h3>{{ book['title'] }}</h3>
+                <p>UPC: {{ book['UPC'] }}</p>
+                <p>Product Type: {{ book['Product_Type'] }}</p>
+                <p>Price excl. tax: {{ book['Price_excl_tax'] }}</p>
+                <p>Price incl. tax: {{ book['Price_incl_tax'] }}</p>
+                <p>Tax: {{ book['tax'] }}</p>
+                <p>Availability: {{ book['Availability'] }}</p>
+                <p>Description: {{ book['Description'] }}</p>
+                <p>Reviews: {{ book['Reviews'] }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function searchBooks() {
+            var input, filter, productListing, productCards, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            productListing = document.querySelector('.product-listing');
+            productCards = productListing.getElementsByClassName('product-card');
+
+            for (i = 0; i < productCards.length; i++) {
+                txtValue = productCards[i].querySelector('h3').textContent || productCards[i].querySelector('h3').innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    productCards[i].style.display = '';
+                } else {
+                    productCards[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
